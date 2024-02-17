@@ -58,7 +58,7 @@ function Login() {
             <LockOutlinedIcon align="center" />
           </Avatar>
         </Grid>
-        <Container maxWidth="xs">
+        <Container maxWidth="xl">
           <Typography
             variant="h4"
             align="center"

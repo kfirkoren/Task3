@@ -156,9 +156,18 @@ function Register() {
       setPasswordMatchError('')
     }
 
-    // Handle login logic here
     console.log('Username:', username)
     console.log('Password:', password)
+    console.log('Password Verification:', passwordVerification)
+    console.log('Selected Image:', selectedImage)
+    console.log('Name:', name)
+    console.log('Family Name:', familyName)
+    console.log('Email:', email)
+    console.log('Date of Birth:', dob)
+    console.log('City:', city)
+    console.log('Cities:', cities)
+    console.log('Street:', street)
+    console.log('Number:', number)
     console.log('success')
   }
 
@@ -170,7 +179,7 @@ function Register() {
             <LockOutlinedIcon align="center" />
           </Avatar>
         </Grid>
-        <Container maxWidth="xs">
+        <Container maxWidth="xl">
           <Typography
             variant="h4"
             align="center"
@@ -179,7 +188,7 @@ function Register() {
           >
             Register
           </Typography>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} style={RegisterStyle.formStyle}>
             <TextField
               label="Username"
               variant="outlined"
@@ -242,7 +251,7 @@ function Register() {
               variant="outlined"
               fullWidth
               margin="normal"
-              value={name}
+              value={familyName}
               onChange={handlefamilyNameChange}
               error={Boolean(familyNameError)}
               helperText={familyNameError}
