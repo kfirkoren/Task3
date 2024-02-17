@@ -103,6 +103,7 @@ function Register() {
     const streetRegex = /^[א-ת]$/
     if (!streetRegex.test(input)) {
       setStreetError('Please enter a single Hebrew letter for the street.')
+      setStreet('')
     } else {
       setStreet(input)
       setStreetError('')
@@ -113,6 +114,7 @@ function Register() {
     const input = e.target.value
     // Validate positive number
     if (isNaN(input) || input <= 0) {
+      setNumber('')
       setNumberError('Please enter a positive number.')
     } else {
       setNumber(input)
