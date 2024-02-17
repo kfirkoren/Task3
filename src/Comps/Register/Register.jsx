@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import RegisterStyle from './RegisterStyle.jsx'
+import Autocomplete from '@mui/material/Autocomplete'
 
 function Register() {
   const [username, setUsername] = useState('')
@@ -22,6 +23,21 @@ function Register() {
   const [passwordVerification, setPasswordVerification] = useState('')
   const [passwordMatchError, setPasswordMatchError] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [name, setName] = useState('')
+  const [nameError, setNameError] = useState('')
+  const [familyName, setfamilyName] = useState('')
+  const [familyNameError, setfamilyNameError] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [dob, setDob] = useState('')
+  const [city, setCity] = useState('')
+  const [cityError, setCityError] = useState('')
+  const [cities] = useState(['New York', 'Los Angeles', 'Chicago'])
+  const [street, setStreet] = useState('')
+  const [streetError, setStreetError] = useState('')
+  const [number, setNumber] = useState('')
+  const [numberError, setNumberError] = useState('')
+
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file && file.type === 'image/jpeg') {
@@ -30,8 +46,7 @@ function Register() {
       setSelectedImage(null)
     }
   }
-  const [name, setName] = useState('')
-  const [nameError, setNameError] = useState('')
+
   const handleNameChange = (e) => {
     const newName = e.target.value
     // Define the regex pattern for the name field (only allowing text)
@@ -45,8 +60,7 @@ function Register() {
       setNameError('')
     }
   }
-  const [familyName, setfamilyName] = useState('')
-  const [familyNameError, setfamilyNameError] = useState('')
+
   const handlefamilyNameChange = (e) => {
     const newName = e.target.value
     // Define the regex pattern for the name field (only allowing text)
@@ -58,6 +72,51 @@ function Register() {
     } else {
       setfamilyName(newName)
       setfamilyNameError('')
+    }
+  }
+
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(newEmail)) {
+      setEmail(newEmail)
+      setEmailError('Invalid email format.')
+    } else {
+      setEmail(newEmail)
+      setEmailError('')
+    }
+  }
+
+  const handleDateChange = (e) => {
+    setDob(e.target.value)
+  }
+
+  const handleCityChange = (e) => {
+    const input = e.target.value
+    setCity(input)
+    setCityError('')
+  }
+
+  const handleStreetChange = (e) => {
+    const input = e.target.value
+    // Validate street name (only one Hebrew letter)
+    const streetRegex = /^[א-ת]$/
+    if (!streetRegex.test(input)) {
+      setStreetError('Please enter a single Hebrew letter for the street.')
+    } else {
+      setStreet(input)
+      setStreetError('')
+    }
+  }
+
+  const handleNumberChange = (e) => {
+    const input = e.target.value
+    // Validate positive number
+    if (isNaN(input) || input <= 0) {
+      setNumberError('Please enter a positive number.')
+    } else {
+      setNumber(input)
+      setNumberError('')
     }
   }
 
@@ -186,6 +245,68 @@ function Register() {
               error={Boolean(familyNameError)}
               helperText={familyNameError}
             />
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={handleEmailChange}
+              error={Boolean(emailError)}
+              helperText={emailError}
+            />
+            <TextField
+              label="Date of Birth"
+              type="date"
+              fullWidth
+              margin="normal"
+              value={dob}
+              onChange={handleDateChange}
+            />
+            <FormControl fullWidth margin="normal">
+              <Autocomplete
+                options={cities}
+                value={city}
+                onChange={(event, newValue) => {
+                  setCity(newValue)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="City"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleCityChange}
+                    error={Boolean(cityError)}
+                    helperText={cityError}
+                  />
+                )}
+              />
+            </FormControl>
+            <TextField
+              label="Street"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={street}
+              onChange={handleStreetChange}
+              error={Boolean(streetError)}
+              helperText={streetError}
+            />
+            <FormControl fullWidth margin="normal">
+              <TextField
+                label="Number"
+                type="number"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={number}
+                onChange={handleNumberChange}
+                error={Boolean(numberError)}
+                helperText={numberError}
+                inputProps={{ min: 1 }}
+              />
+            </FormControl>
             <Button
               type="submit"
               variant="contained"
