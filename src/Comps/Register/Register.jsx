@@ -168,7 +168,7 @@ function Register() {
     console.log('Cities:', cities)
     console.log('Street:', street)
     console.log('Number:', number)
-    console.log('check')
+    console.log('check2')
     console.log('success')
   }
 
