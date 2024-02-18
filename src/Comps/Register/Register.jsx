@@ -96,7 +96,7 @@ function Register() {
       setdateError('Future dates are not allowed')
     } else {
       setDob(e.target.value)
-      setdateError('Future dates are not allowed')
+      setdateError('')
     }
   }
 

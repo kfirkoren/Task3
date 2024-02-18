@@ -27,8 +27,6 @@ function EditDetails() {
   const [nameError, setNameError] = useState('')
   const [familyName, setfamilyName] = useState('')
   const [familyNameError, setfamilyNameError] = useState('')
-  const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState('')
   const [dob, setDob] = useState('')
   const [city, setCity] = useState('')
   const [cityError, setCityError] = useState('')
@@ -75,18 +73,6 @@ function EditDetails() {
     }
   }
 
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(newEmail)) {
-      setEmail(newEmail)
-      setEmailError('Invalid email format.')
-    } else {
-      setEmail(newEmail)
-      setEmailError('')
-    }
-  }
-
   const handleDateChange = (e) => {
     setDob(e.target.value)
   }
@@ -122,7 +108,7 @@ function EditDetails() {
     }
   }
 
-  const handleLogin = (e) => {
+  const handleUpdate = (e) => {
     /*מונע את ריענון הדף */
     e.preventDefault()
 
@@ -162,13 +148,42 @@ function EditDetails() {
     console.log('Selected Image:', selectedImage)
     console.log('Name:', name)
     console.log('Family Name:', familyName)
-    console.log('Email:', email)
     console.log('Date of Birth:', dob)
     console.log('City:', city)
-    console.log('Cities:', cities)
     console.log('Street:', street)
     console.log('Number:', number)
     console.log('success')
+
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    const loggedInUserEmail = JSON.parse(sessionStorage.getItem('user')).email
+
+    const updatedUserData = {
+      username: username,
+      password: password,
+      passwordVerification: passwordVerification,
+      selectedImage: selectedImage,
+      name: name,
+      familyName: familyName,
+      email: loggedInUserEmail,
+      dob: dob,
+      city: city,
+      street: street,
+      number: number,
+    }
+
+    // Update the user data in localStorage as well
+    const users = JSON.parse(localStorage.getItem('users'))
+    const updatedUsers = users.map((user) => {
+      if (user.email === loggedInUserEmail) {
+        return updatedUserData
+      } else {
+        return user
+      }
+    })
+    localStorage.setItem('users', JSON.stringify(updatedUsers))
+
+    // Save the updated user data back to sessionStorage
+    sessionStorage.setItem('user', JSON.stringify(updatedUserData))
   }
 
   return (
@@ -188,7 +203,7 @@ function EditDetails() {
           >
             EditDetails
           </Typography>
-          <form onSubmit={handleLogin} style={EditDetailsStyle.formStyle}>
+          <form onSubmit={handleUpdate} style={EditDetailsStyle.formStyle}>
             <TextField
               label="Username"
               variant="outlined"
@@ -257,16 +272,6 @@ function EditDetails() {
               helperText={familyNameError}
             />
             <TextField
-              label="Email"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={email}
-              onChange={handleEmailChange}
-              error={Boolean(emailError)}
-              helperText={emailError}
-            />
-            <TextField
               label="Date of Birth"
               type="date"
               fullWidth
@@ -325,12 +330,8 @@ function EditDetails() {
               fullWidth
               size="large"
             >
-              Sign in
+              update
             </Button>
-            <Typography style={{ paddingTop: '10px' }}>
-              Don't have an account?
-              <Link href="#"> sign up</Link>
-            </Typography>
           </form>
         </Container>
       </Paper>

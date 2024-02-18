@@ -2,7 +2,7 @@ const ProfileStyle = {
   paperStyle: {
     padding: 20,
     height: '50vh',
-    width: 400,
+    width: 700,
     margin: '20px auto',
   },
   avatarStyle: {
