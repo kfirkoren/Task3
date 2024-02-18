@@ -48,6 +48,17 @@ function Login() {
     console.log('Username:', username)
     console.log('Password:', password)
     console.log('success')
+
+    const users = JSON.parse(localStorage.getItem('users')) || []
+    const isUserExsist = users.find(
+      (user) => user.username === username && user.password === password
+    )
+    if (isUserExsist) {
+      sessionStorage.setItem('user', JSON.stringify(isUserExsist))
+      console.log('User logged in:', isUserExsist)
+    } else {
+      console.log('Invalid username or password')
+    }
   }
 
   return (

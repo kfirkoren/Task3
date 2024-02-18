@@ -12,10 +12,10 @@ import {
   Input,
 } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import RegisterStyle from './RegisterStyle.jsx'
+import EditDetailsStyle from './EditDetailsStyle.jsx'
 import Autocomplete from '@mui/material/Autocomplete'
 
-function Register() {
+function EditDetails() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
@@ -30,7 +30,6 @@ function Register() {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
   const [dob, setDob] = useState('')
-  const [dateError, setdateError] = useState('')
   const [city, setCity] = useState('')
   const [cityError, setCityError] = useState('')
   const [cities] = useState(['New York', 'Los Angeles', 'Chicago'])
@@ -89,15 +88,7 @@ function Register() {
   }
 
   const handleDateChange = (e) => {
-    const selectedDate = new Date(e.target.value)
-    const currentDate = new Date()
-    if (selectedDate > currentDate) {
-      setDob('')
-      setdateError('Future dates are not allowed')
-    } else {
-      setDob(e.target.value)
-      setdateError('Future dates are not allowed')
-    }
+    setDob(e.target.value)
   }
 
   const handleCityChange = (e) => {
@@ -178,41 +169,13 @@ function Register() {
     console.log('Street:', street)
     console.log('Number:', number)
     console.log('success')
-
-    const user = {
-      username: username,
-      password: password,
-      selectedImage: selectedImage ? URL.createObjectURL(selectedImage) : null,
-      name: name,
-      familyName: familyName,
-      email: email,
-      dob: dob,
-      city: city,
-      street: street,
-      number: number,
-    }
-
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || []
-
-    // Check if the username already exists
-    const isUserExist = existingUsers.find(
-      (existingUser) => existingUser.email === email
-    )
-
-    if (isUserExist) {
-      alert('User already exists. Please choose a different email.')
-    } else {
-      existingUsers.push(user)
-      localStorage.setItem('users', JSON.stringify(existingUsers))
-      alert('User registered successfully.')
-      console.log('User registered:', user)
-    }
   }
+
   return (
     <Grid>
-      <Paper elevation={10} style={RegisterStyle.paperStyle}>
+      <Paper elevation={10} style={EditDetailsStyle.paperStyle}>
         <Grid align="center">
-          <Avatar style={RegisterStyle.avatarStyle}>
+          <Avatar style={EditDetailsStyle.avatarStyle}>
             <LockOutlinedIcon align="center" />
           </Avatar>
         </Grid>
@@ -223,9 +186,9 @@ function Register() {
             fontWeight="bold"
             gutterBottom
           >
-            Register
+            EditDetails
           </Typography>
-          <form onSubmit={handleLogin} style={RegisterStyle.formStyle}>
+          <form onSubmit={handleLogin} style={EditDetailsStyle.formStyle}>
             <TextField
               label="Username"
               variant="outlined"
@@ -310,8 +273,6 @@ function Register() {
               margin="normal"
               value={dob}
               onChange={handleDateChange}
-              error={Boolean(dateError)}
-              helperText={dateError}
             />
             <FormControl fullWidth margin="normal">
               <Autocomplete
@@ -377,4 +338,4 @@ function Register() {
   )
 }
 
-export default Register
+export default EditDetails
